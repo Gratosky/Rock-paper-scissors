@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      console.log(`Hello world`);
+
+      //computer choice
+      //we use Math.random() with Math.floor() to generate a random number between 1 and 3
+      function getComputerChoice() {
+        const choice = Math.floor(Math.random() * (4 - 1) + 1);
+        let result = "";
+
+        if (choice === 1) {
+          result += "rock";
+        } else if (choice === 2) {
+          result += "paper";
+        } else if (choice === 3) {
+          result += "scissors";
+        }
+
+        return result;
+      }
+      //computer choice should generate 'rock', 'paper', scissors randomly
+      console.log(getComputerChoice());
+
+      //human choice
+      function getHumanChoice(choice) {
+        choice = prompt(`Input user choice.`);
+        if (choice === "") {
+          prompt(`Please input a valid choice.`);
+        }
+
+        let result = "";
+
+        if (choice === "rock") {
+          result += "rock";
+        } else if (choice === "paper") {
+          result += "paper";
+        } else if (choice === "scissors") {
+          result += "scissors";
+        }
+
+        return result;
+      }
+
+      console.log(getHumanChoice("paper"));
+    </script>
+  </body>
+</html>
