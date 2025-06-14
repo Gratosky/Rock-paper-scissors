@@ -8,7 +8,8 @@
   <body>
     <script>
       console.log(`Hello world`);
-
+      let computerScore = 0;
+      let humanScore = 0;
       //computer choice
       //we use Math.random() with Math.floor() to generate a random number between 1 and 3
       function getComputerChoice() {
@@ -16,11 +17,11 @@
         let result = "";
 
         if (choice === 1) {
-          result += "rock";
+          result = "rock";
         } else if (choice === 2) {
-          result += "paper";
+          result = "paper";
         } else if (choice === 3) {
-          result += "scissors";
+          result = "scissors";
         }
 
         return result;
@@ -29,26 +30,84 @@
       console.log(getComputerChoice());
 
       //human choice
-      function getHumanChoice(choice) {
-        choice = prompt(`Input user choice.`);
-        if (choice === "") {
-          prompt(`Please input a valid choice.`);
+      function getHumanChoice() {
+        input = prompt(`Input user choice.`).toLowerCase();
+        let choice = "";
+
+        if (input === "rock" || input === "paper" || input === "scissors") {
+          return (choice = input);
         }
-
-        let result = "";
-
-        if (choice === "rock") {
-          result += "rock";
-        } else if (choice === "paper") {
-          result += "paper";
-        } else if (choice === "scissors") {
-          result += "scissors";
-        }
-
-        return result;
       }
 
       console.log(getHumanChoice("paper"));
+      //logic to play a single round
+      function playRound(humanChoice, computerChoice) {
+        let roundResult = "";
+
+        if (humanChoice === null) {
+          return `Game cancelled.`;
+        }
+
+        if (humanChoice === computerChoice) {
+          return `It's a tie.`;
+        }
+
+        if (
+          (humanChoice === "rock" && computerChoice === "scissors") ||
+          (humanChoice === "paper" && computerChoice === "rock") ||
+          (humanChoice === "scissors" && computerChoice === "paper")
+        ) {
+          humanScore++;
+          roundResult = console.log(
+            `You win! ${humanChoice} beats ${computerChoice}`
+          );
+        } else {
+          computerScore++;
+          roundResult = `You lose! ${computerChoice} beats ${humanChoice}`;
+        }
+
+        if (roundResult.includes(`You win!`)) return `human_win`;
+        if (roundResult.includes(`You lose!`)) return `computer_win`;
+        return `tie`;
+      }
+      const humanSelection = getHumanChoice();
+      const computerSelection = getComputerChoice();
+
+      console.log(playRound(humanSelection, computerSelection));
+      //logic to play entire game
+      function playGame() {
+        //should call play round 5 times and keep track
+        let humanScore = 0;
+        let computerScore = 0;
+
+        for (let i = 1; i <= 5; i++) {
+          console.log(`\n---Round ${i} ---`);
+          //loops 5 times
+          const humanSelection = getHumanChoice();
+          const computerSelection = getComputerChoice();
+
+          const roundResult = playRound(humanSelection, computerSelection);
+          if (roundResult === `human_win`) {
+            humanScore++;
+            console.log(`You win!`);
+          } else if (roundResult === `computer_win`) {
+            computerScore++;
+            console.log(`You lose!`);
+          } else {
+            console.log(`It's a tie!`);
+          }
+        }
+
+        if (computerScore > humanScore) {
+          return `You lose! Computer ${computerScore} - Player ${humanScore}`;
+        } else if (computerScore < humanScore) {
+          return `You win! Player ${humanScore} - Computer ${computerScore}`;
+        } else {
+          return `It's a tie!`;
+        }
+      }
+
+      console.log(playGame());
     </script>
   </body>
 </html>
