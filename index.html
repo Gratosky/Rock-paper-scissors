@@ -39,36 +39,29 @@
         }
       }
 
-      console.log(getHumanChoice("paper"));
+      console.log(getHumanChoice());
       //logic to play a single round
       function playRound(humanChoice, computerChoice) {
-        let roundResult = "";
-
         if (humanChoice === null) {
           return `Game cancelled.`;
         }
 
         if (humanChoice === computerChoice) {
-          return `It's a tie.`;
-        }
-
-        if (
+          console.log(`It's a tie`);
+          return `tie`;
+        } else if (
           (humanChoice === "rock" && computerChoice === "scissors") ||
           (humanChoice === "paper" && computerChoice === "rock") ||
           (humanChoice === "scissors" && computerChoice === "paper")
         ) {
           humanScore++;
-          roundResult = console.log(
-            `You win! ${humanChoice} beats ${computerChoice}`
-          );
+          console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+          return `win`;
         } else {
           computerScore++;
-          roundResult = `You lose! ${computerChoice} beats ${humanChoice}`;
+          console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+          return `lose`;
         }
-
-        if (roundResult.includes(`You win!`)) return `human_win`;
-        if (roundResult.includes(`You lose!`)) return `computer_win`;
-        return `tie`;
       }
       const humanSelection = getHumanChoice();
       const computerSelection = getComputerChoice();
@@ -77,8 +70,8 @@
       //logic to play entire game
       function playGame() {
         //should call play round 5 times and keep track
-        let humanScore = 0;
-        let computerScore = 0;
+        humanScore = 0;
+        computerScore = 0;
 
         for (let i = 1; i <= 5; i++) {
           console.log(`\n---Round ${i} ---`);
@@ -87,23 +80,25 @@
           const computerSelection = getComputerChoice();
 
           const roundResult = playRound(humanSelection, computerSelection);
-          if (roundResult === `human_win`) {
-            humanScore++;
-            console.log(`You win!`);
-          } else if (roundResult === `computer_win`) {
-            computerScore++;
-            console.log(`You lose!`);
-          } else {
-            console.log(`It's a tie!`);
+          if (roundResult === `cancelled`) {
+            console.log(`Game cancelled by user.`);
+            break;
           }
-        }
 
+          console.log(
+            `Current Score: Human ${humanScore} - Computer ${computerScore}`
+          );
+        }
         if (computerScore > humanScore) {
-          return `You lose! Computer ${computerScore} - Player ${humanScore}`;
+          console.log(
+            `You lose! Computer ${computerScore} - Player ${humanScore}`
+          );
         } else if (computerScore < humanScore) {
-          return `You win! Player ${humanScore} - Computer ${computerScore}`;
+          console.log(
+            `You win! Player ${humanScore} - Computer ${computerScore}`
+          );
         } else {
-          return `It's a tie!`;
+          console.log(`It's a tie!`);
         }
       }
 
